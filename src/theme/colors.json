@@ -1,0 +1,34 @@
+{
+  "primary": {
+    "color": "#0044D1",
+    "onColor": "#FFF"
+  },
+  "primary_variant": {
+    "color": "#BDD2FF",
+    "onColor": "#0A1A52"
+  },
+  "accent": {
+    "color": "#0A1A52",
+    "onColor": "#FFF"
+  },
+  "secondary": {
+    "color": "#FFED47",
+    "onColor": "#0A1A52"
+  },
+  "secondary_variant": {
+    "color": "#F8B321",
+    "onColor": "#FFF"
+  },
+  "background": {
+    "color": "#FFF",
+    "onColor": "#0A1A52"
+  },
+  "color_codes": {
+    "dark_grey": "#ADACA8",
+    "light_grey": "#E0E0E0",
+    "light_bronze": "#F09E52",
+    "dark_bronze": "#DE914A"
+  },
+  "error": "#FB3C00",
+  "success": "#00FB7A"
+}
