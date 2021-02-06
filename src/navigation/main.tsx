@@ -2,11 +2,18 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { StatusBar } from 'react-native'
+import { Coin } from '../graphql/types'
+import CoinDetailsScreen from '../screens/CoinDetailsScreen'
 import Home from '../screens/Home'
 import theme from '../theme'
 import { ScreenRoute } from './navConstants'
 
-const Main = createStackNavigator()
+export type MainStackParamsList = {
+  [ScreenRoute.HOME]: undefined;
+  [ScreenRoute.DETAILS]: { coin: Coin };
+};
+
+const Main = createStackNavigator<MainStackParamsList>()
 
 const MainNavigation = () => {
   return (
@@ -26,6 +33,9 @@ const MainNavigation = () => {
         <Main.Screen name={ScreenRoute.HOME} component={Home} options={{
           title: "Home"
         }} />
+        <Main.Screen name={ScreenRoute.DETAILS} component={CoinDetailsScreen} options={({ route }) => ({
+          title: route.params.coin.name
+        })} />
       </Main.Navigator>
     </NavigationContainer>
   )

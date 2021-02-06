@@ -12,7 +12,6 @@ import theme from '../../theme'
 const Home: React.FC<{}> = () => {
 
   const debounce = useRef<any>(undefined)
-
   const [search, setSearch] = useState('')
   const coinsContext = useContext(CoinsContext)
   const [filtered, setFiltered] = useState(coinsContext.data)
