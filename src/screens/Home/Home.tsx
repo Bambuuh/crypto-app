@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Text, View } from 'react-native'
 import ScreenContainer from '../../components/_general/ScreenContainer'
 import { Coin } from '../../graphql/types'
@@ -16,21 +16,29 @@ const Home: React.FC<{}> = () => {
   const coinsContext = useContext(CoinsContext)
   const [filtered, setFiltered] = useState(coinsContext.data)
 
+  useEffect(() => {
+    filterCoins()
+  }, [coinsContext.data])
+
+  const filterCoins = () => {
+    const query = search.toLowerCase().trim()
+    if (query.trim().length === 0) {
+      setFiltered(coinsContext.data)
+      return
+    }
+    const filteredCoins = coinsContext.data.filter(coin => {
+      const matchName = coin.name.toLowerCase().includes(query)
+      const matchCode = coin.asset_id.toLowerCase().includes(query)
+      return matchName || matchCode
+    })
+    setFiltered(filteredCoins)
+  }
+
   const onSearchChange = (value: string) => {
     setSearch(value)
     clearTimeout(debounce.current)
     debounce.current = setTimeout(() => {
-      const query = search.toLowerCase().trim()
-      if (query.trim().length === 0) {
-        setFiltered(coinsContext.data)
-        return
-      }
-      const filteredCoins = coinsContext.data.filter(coin => {
-        const matchName = coin.name.toLowerCase().includes(query)
-        const matchCode = coin.asset_id.toLowerCase().includes(query)
-        return matchName || matchCode
-      })
-      setFiltered(filteredCoins)
+      filterCoins()
     }, 200)
   }
 
