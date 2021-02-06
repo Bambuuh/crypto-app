@@ -13,3 +13,11 @@ export type Icon = {
 }
 
 export type CoinsQueryResponse = { getIcons: Icon[]; getCoins: Coin[] }
+
+export type History = {
+  time_period_start: Date
+  time_period_end: Date
+  price_close: number
+}
+
+export type HistoryQueryResponse = { getHistory: History[] }
