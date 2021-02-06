@@ -1,21 +1,23 @@
 import { useQuery } from '@apollo/client'
 import { RouteProp } from '@react-navigation/native'
 import React from 'react'
-import { Dimensions, View } from 'react-native'
+import { Dimensions } from 'react-native'
 import { HISTORY_QUERY } from '../../graphql'
 import { HistoryQueryResponse } from '../../graphql/types'
 import { MainStackParamsList } from '../../navigation/main'
 import { ScreenRoute } from '../../navigation/navConstants'
-
-import {
-  LineChart,
-} from "react-native-chart-kit";
+import { LineChart } from "react-native-chart-kit";
 import { getMonthFromDate } from '../../utils/date'
 import theme from '../../theme'
+import FullScreenSpinner from '../../components/FullScreenSpinner'
+import * as S from './styled'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 type Props = {
   route: RouteProp<MainStackParamsList, ScreenRoute.DETAILS>
 }
+
+const { width, height } = Dimensions.get('window')
 
 const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
@@ -24,7 +26,7 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const { loading, data, error } = useQuery<HistoryQueryResponse>(HISTORY_QUERY(coin.asset_id))
 
   if (loading && !data) {
-    return null
+    return <FullScreenSpinner />
   }
 
   const getPrettyLabels = () => {
@@ -43,45 +45,51 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
     return label
   }
 
-  return (
-    <View>
-      <LineChart
 
-        data={{
-          labels: getPrettyLabels(),
-          datasets: getDataSet()
-        }}
-        width={Dimensions.get("window").width}
-        height={220}
-        yAxisLabel="$"
-        yAxisInterval={1}
-        formatYLabel={formatYLabel}
-        chartConfig={{
-          propsForLabels: {
-            fontSize: 8
-          },
-          backgroundColor: theme.background.color,
-          backgroundGradientFrom: theme.background.color,
-          backgroundGradientTo: theme.background.color,
-          fillShadowGradient: "#1e5055",
-          fillShadowGradientOpacity: 1,
-          decimalPlaces: 2,
-          color: () => "#41c28b",
-          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          style: {
-            borderRadius: 16,
-          },
-          propsForDots: {
-            r: "0",
-          }
-        }}
-        bezier
-        style={{
-        }}
-        withHorizontalLines={false}
-        withVerticalLines={false}
-      />
-    </View>
+  return (
+    <S.Container>
+      <S.TopContainer >
+        <SafeAreaView />
+        <S.CoinName>{coin.name}</S.CoinName>
+      </S.TopContainer>
+      <S.ChartContainer>
+        <LineChart
+          data={{
+            labels: getPrettyLabels(),
+            datasets: getDataSet()
+          }}
+          height={height * 0.75}
+          width={width + S.chartExtraWidth}
+          yAxisLabel="$"
+          yAxisInterval={1}
+          formatYLabel={formatYLabel}
+
+          chartConfig={{
+            propsForLabels: {
+              fontSize: 8
+            },
+            backgroundColor: theme.background.color,
+            backgroundGradientFrom: theme.background.color,
+            backgroundGradientTo: theme.background.color,
+            fillShadowGradient: "#42598f",
+            fillShadowGradientOpacity: 1,
+            decimalPlaces: 2,
+            color: () => "#6592e2",
+            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            style: {
+              borderRadius: 16,
+            },
+            propsForDots: {
+              r: "0",
+            }
+          }}
+          bezier
+          withVerticalLabels={false}
+          withHorizontalLines={false}
+          withVerticalLines={false}
+        />
+      </S.ChartContainer>
+    </S.Container>
   )
 }
 

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { View } from 'react-native'
 import ScreenContainer from '../../components/_general/ScreenContainer'
 import { Coin } from '../../graphql/types'
 import CoinListItem from '../../components/CoinListItem'
@@ -8,7 +7,6 @@ import { FlatList } from 'react-native-gesture-handler'
 import * as S from './styled'
 import Input from '../../components/Input'
 import theme from '../../theme'
-import Spinner from '../../components/Spinner'
 import FullScreenSpinner from '../../components/FullScreenSpinner'
 
 const Home: React.FC<{}> = () => {

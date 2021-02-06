@@ -34,6 +34,7 @@ const MainNavigation = () => {
           title: "Home"
         }} />
         <Main.Screen name={ScreenRoute.DETAILS} component={CoinDetailsScreen} options={({ route }) => ({
+          header: () => null,
           title: route.params.coin.name
         })} />
       </Main.Navigator>
