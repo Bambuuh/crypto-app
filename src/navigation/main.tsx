@@ -22,7 +22,7 @@ const MainNavigation = () => {
       dark: true
     }}>
       <StatusBar barStyle="light-content" />
-      <Main.Navigator>
+      <Main.Navigator screenOptions={{ headerStyle: { elevation: 0, shadowOpacity: 0 } }}>
         <Main.Screen name={ScreenRoute.HOME} component={Home} options={{
           title: "Home"
         }} />

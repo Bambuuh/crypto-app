@@ -4,15 +4,16 @@ import theme from '../../theme'
 export const Container = styled.View`
   flex-direction: row;
   background-color: ${theme.primary.color};
-  padding: 8px;
-  border-radius: 10px;
+  padding: ${theme.baseline}px;
+  border-radius: ${theme.borderRadious.wide}px;
   align-items: center;
 `
 
+const iconSize = theme.baseline * 4
 export const IconImage = styled.Image`
-  width: 30px;
-  height: 30px;
-  margin-right: 16px;
+  width: ${iconSize}px;
+  height: ${iconSize}px;
+  margin-right: ${theme.baseline * 2}px;
 `
 
 export const CoinName = styled.Text`
