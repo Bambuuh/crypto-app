@@ -21,7 +21,6 @@ const Home: React.FC<{}> = () => {
     setSearch(value)
     clearTimeout(debounce.current)
     debounce.current = setTimeout(() => {
-      console.log('running')
       const query = search.toLowerCase().trim()
       if (query.trim().length === 0) {
         setFiltered(coinsContext.data)
