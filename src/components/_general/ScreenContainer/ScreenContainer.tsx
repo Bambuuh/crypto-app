@@ -1,9 +1,12 @@
 import React from 'react'
+import { ViewProps } from 'react-native'
 import * as S from './styled'
 
-const ScreenContainer: React.FC = ({ children }) => {
+type Props = ViewProps
+
+const ScreenContainer: React.FC<Props> = ({ children, ...props }) => {
   return (
-    <S.Container>{children}</S.Container>
+    <S.Container {...props}>{children}</S.Container>
   )
 }
 
