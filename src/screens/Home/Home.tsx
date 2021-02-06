@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import ScreenContainer from '../../components/_general/ScreenContainer'
 import { Coin } from '../../graphql/types'
 import CoinListItem from '../../components/CoinListItem'
@@ -8,6 +8,8 @@ import { FlatList } from 'react-native-gesture-handler'
 import * as S from './styled'
 import Input from '../../components/Input'
 import theme from '../../theme'
+import Spinner from '../../components/Spinner'
+import FullScreenSpinner from '../../components/FullScreenSpinner'
 
 const Home: React.FC<{}> = () => {
 
@@ -43,13 +45,7 @@ const Home: React.FC<{}> = () => {
   }
 
   if (coinsContext.loading) {
-    return (
-      <ScreenContainer>
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={{ color: 'white' }}>COINS LOADING: {coinsContext.loading}</Text>
-        </View>
-      </ScreenContainer>
-    )
+    return (<FullScreenSpinner />)
   }
 
   const renderItem = ({ item }: { item: Coin }) => <CoinListItem style={{ marginBottom: 8 }} coin={item} />
