@@ -20,4 +20,4 @@ export type History = {
   price_close: number
 }
 
-export type HistoryQueryResponse = { getHistory: History[] }
+export type HistoryQueryResponse = { getCoinHistory: History[] }
