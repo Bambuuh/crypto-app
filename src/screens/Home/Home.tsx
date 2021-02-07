@@ -46,6 +46,10 @@ const Home: React.FC<{}> = () => {
     return (<FullScreenSpinner />)
   }
 
+  if (coinsContext.error) {
+    console.log(coinsContext.error)
+  }
+
   const renderItem = ({ item }: { item: Coin }) => <CoinListItem style={{ marginBottom: 8 }} coin={item} />
   const keyExtractor = (item: Coin) => item.asset_id
 

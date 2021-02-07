@@ -17,10 +17,13 @@ export const CoinName = styled.Text`
   font-weight: bold;
 `
 
-const chartSpace = 50
-export const chartExtraWidth = chartSpace * 2
+const chartSpaceRight = 78
+const chartSpaceLeft = 63
+export const chartExtraWidth = chartSpaceRight + chartSpaceLeft
 export const ChartContainer = styled.View`
-  margin-right: -${chartSpace}px;
-  margin-left: -${chartSpace}px;
-  margin-bottom: -${chartSpace * 3}px;
+  width: 100%;
+  background-color: red;
+  margin-right: -${chartSpaceRight}px;
+  margin-left: -${chartSpaceLeft}px;
+  margin-bottom: -150px;
 `
