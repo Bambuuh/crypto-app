@@ -63,6 +63,8 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
     setPeriod(value)
   }
 
+  const oneSpace = Math.ceil((width - 63) / data!.getCoinHistory.length) * 1.35
+
   return (
     <S.Container>
       <S.TopContainer >
@@ -72,14 +74,15 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
       </S.TopContainer>
       {
         loading ? <FullScreenSpinner /> :
-          <S.ChartContainer >
+          <S.ChartContainer style={{ marginRight: -oneSpace }} >
             <LineChart
+              style={{ paddingRight: 0, paddingLeft: 0 }}
               data={{
                 labels: getPrettyLabels(),
-                datasets: getDataSet()
+                datasets: getDataSet(),
               }}
               height={height * 0.75}
-              width={width + S.chartExtraWidth}
+              width={width + oneSpace}
               yAxisLabel="$"
               yAxisInterval={1}
               formatYLabel={formatYLabel}
@@ -87,7 +90,6 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
               chartConfig={{
                 propsForLabels: {
                   fontSize: 10,
-
                 },
                 backgroundColor: theme.background.color,
                 backgroundGradientFrom: theme.background.color,
@@ -97,14 +99,10 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
                 decimalPlaces: 2,
                 color: () => "#6592e2",
                 labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                style: {
-                  borderRadius: 16,
-                },
               }}
               withOuterLines={false}
               withDots={false}
               bezier
-              // withVerticalLabels={false}
               withHorizontalLines={false}
               withVerticalLines={false}
             />

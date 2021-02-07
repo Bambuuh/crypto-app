@@ -21,9 +21,5 @@ const chartSpaceRight = 78
 const chartSpaceLeft = 63
 export const chartExtraWidth = chartSpaceRight + chartSpaceLeft
 export const ChartContainer = styled.View`
-  width: 100%;
-  background-color: red;
-  margin-right: -${chartSpaceRight}px;
-  margin-left: -${chartSpaceLeft}px;
   margin-bottom: -150px;
 `
