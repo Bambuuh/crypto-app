@@ -17,9 +17,6 @@ export const CoinName = styled.Text`
   font-weight: bold;
 `
 
-const chartSpaceRight = 78
-const chartSpaceLeft = 63
-export const chartExtraWidth = chartSpaceRight + chartSpaceLeft
 export const ChartContainer = styled.View`
   margin-bottom: -150px;
 `

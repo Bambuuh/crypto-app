@@ -10,7 +10,7 @@ export const SwiperButton = styled.View<{ isLast: boolean; active: boolean }>`
   border-radius: ${theme.borderRadious.wide}px;
   margin-right: ${theme.baseline * 2}px;
   ${({ isLast }) => isLast && `margin-right: 0`}
-  ${({ active }) => active && `background-color: red`}
+  ${({ active }) => active && `background-color: ${theme.accent.color}`}
 `
 
 export const SwiperButtonText = styled.Text`

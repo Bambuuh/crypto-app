@@ -63,7 +63,7 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
     setPeriod(value)
   }
 
-  const oneSpace = Math.ceil((width - 63) / data!.getCoinHistory.length) * 1.35
+  const oneSpace = data ? Math.ceil((width - 63) / data!.getCoinHistory.length) * 1.35 : 0
 
   return (
     <S.Container>
@@ -102,9 +102,9 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
               }}
               withOuterLines={false}
               withDots={false}
-              bezier
               withHorizontalLines={false}
               withVerticalLines={false}
+              bezier
             />
           </S.ChartContainer>
       }
