@@ -7,7 +7,6 @@ import { HistoryQueryResponse } from '../../graphql/types'
 import { MainStackParamsList } from '../../navigation/main'
 import { ScreenRoute } from '../../navigation/navConstants'
 import { LineChart } from "react-native-chart-kit";
-import { getMonthFromDate } from '../../utils/date'
 import theme from '../../theme'
 import FullScreenSpinner from '../../components/FullScreenSpinner'
 import * as S from './styled'
@@ -44,11 +43,6 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
     return null
   }
 
-  const getPrettyLabels = () => {
-    const labels = data!.getCoinHistory.map(h => getMonthFromDate(h.time_period_start))
-    return labels
-  }
-
   const getDataSet = () => {
     return [{ data: data!.getCoinHistory.map(h => h.price_close), }]
   }
@@ -73,7 +67,7 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
     )
   }
 
-  const oneSpace = data ? Math.ceil((width - 63) / data!.getCoinHistory.length) * 1.35 : 0
+  const padding = theme.baseline * 2
 
   return (
     <S.Container>
@@ -89,36 +83,31 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
         loading ? <FullScreenSpinner /> :
           hasNoDAta ?
             renderNoData() :
-            <S.ChartContainer style={{ marginRight: -oneSpace }} >
+            <S.ChartContainer style={{ padding, width: width - padding * 2, marginHorizontal: padding }}>
               <LineChart
-                style={{ paddingRight: 0, paddingLeft: 0 }}
                 data={{
-                  labels: getPrettyLabels(),
+                  labels: [],
                   datasets: getDataSet(),
                 }}
-                height={height * 0.75}
-                width={width + oneSpace}
+                height={height * 0.25}
+                width={width - (padding * 2) * 2}
                 yAxisLabel="$"
                 yAxisInterval={1}
                 formatYLabel={formatYLabel}
-                yLabelsOffset={-50}
                 chartConfig={{
+                  style: { padding: theme.baseline },
                   propsForLabels: {
-                    fontSize: 10,
+                    fontSize: 12,
                   },
-                  backgroundColor: theme.background.color,
-                  backgroundGradientFrom: theme.background.color,
-                  backgroundGradientTo: theme.background.color,
+                  backgroundGradientFrom: theme.primary.color,
+                  backgroundGradientTo: theme.primary.color,
                   fillShadowGradient: "#42598f",
                   fillShadowGradientOpacity: 1,
                   decimalPlaces: 2,
                   color: () => "#6592e2",
                   labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                 }}
-                withOuterLines={false}
-                withDots={false}
-                withHorizontalLines={false}
-                withVerticalLines={false}
+                withVerticalLabels={false}
                 bezier
               />
             </S.ChartContainer>

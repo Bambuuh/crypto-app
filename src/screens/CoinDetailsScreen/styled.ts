@@ -3,7 +3,6 @@ import theme from '../../theme'
 
 export const Container = styled.View`
   flex: 1;
-  justify-content: space-between;
 `
 
 export const NoDataContainer = styled.View`
@@ -42,5 +41,7 @@ export const CoinPrice = styled.Text`
 `
 
 export const ChartContainer = styled.View`
+  border-radius: ${theme.borderRadious.wide * 2};
+  background-color: ${theme.primary.color};
   margin-bottom: -150px;
 `
