@@ -69,7 +69,10 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
     <S.Container>
       <S.TopContainer >
         <SafeAreaView />
-        <S.CoinName>{coin.name}</S.CoinName>
+        <S.TopInnerContainer>
+          <S.CoinName>{coin.name}</S.CoinName>
+          <S.CoinPrice>${coin.price_usd.toFixed(2)}</S.CoinPrice>
+        </S.TopInnerContainer>
         <SideSwiper selectedValue={period} onPressItem={onPressItem} items={swiperItems} />
       </S.TopContainer>
       {
