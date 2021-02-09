@@ -37,6 +37,8 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
   const { loading, data, error } = useQuery<HistoryQueryResponse>(HISTORY_QUERY(coin.asset_id, period))
 
+  const hasNoDAta = !loading && data?.getCoinHistory.length === 0
+
   if (error) {
     console.log(error)
     return null
@@ -63,6 +65,14 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
     setPeriod(value)
   }
 
+  const renderNoData = () => {
+    return (
+      <S.NoDataContainer>
+        <S.NoDataText>No data for period</S.NoDataText>
+      </S.NoDataContainer>
+    )
+  }
+
   const oneSpace = data ? Math.ceil((width - 63) / data!.getCoinHistory.length) * 1.35 : 0
 
   return (
@@ -71,45 +81,47 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
         <SafeAreaView />
         <S.TopInnerContainer>
           <S.CoinName>{coin.name}</S.CoinName>
-          <S.CoinPrice>${coin.price_usd.toFixed(2)}</S.CoinPrice>
+          {coin.price_usd && <S.CoinPrice>${coin.price_usd.toFixed(2)}</S.CoinPrice>}
         </S.TopInnerContainer>
         <SideSwiper selectedValue={period} onPressItem={onPressItem} items={swiperItems} />
       </S.TopContainer>
       {
         loading ? <FullScreenSpinner /> :
-          <S.ChartContainer style={{ marginRight: -oneSpace }} >
-            <LineChart
-              style={{ paddingRight: 0, paddingLeft: 0 }}
-              data={{
-                labels: getPrettyLabels(),
-                datasets: getDataSet(),
-              }}
-              height={height * 0.75}
-              width={width + oneSpace}
-              yAxisLabel="$"
-              yAxisInterval={1}
-              formatYLabel={formatYLabel}
-              yLabelsOffset={-50}
-              chartConfig={{
-                propsForLabels: {
-                  fontSize: 10,
-                },
-                backgroundColor: theme.background.color,
-                backgroundGradientFrom: theme.background.color,
-                backgroundGradientTo: theme.background.color,
-                fillShadowGradient: "#42598f",
-                fillShadowGradientOpacity: 1,
-                decimalPlaces: 2,
-                color: () => "#6592e2",
-                labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-              }}
-              withOuterLines={false}
-              withDots={false}
-              withHorizontalLines={false}
-              withVerticalLines={false}
-              bezier
-            />
-          </S.ChartContainer>
+          hasNoDAta ?
+            renderNoData() :
+            <S.ChartContainer style={{ marginRight: -oneSpace }} >
+              <LineChart
+                style={{ paddingRight: 0, paddingLeft: 0 }}
+                data={{
+                  labels: getPrettyLabels(),
+                  datasets: getDataSet(),
+                }}
+                height={height * 0.75}
+                width={width + oneSpace}
+                yAxisLabel="$"
+                yAxisInterval={1}
+                formatYLabel={formatYLabel}
+                yLabelsOffset={-50}
+                chartConfig={{
+                  propsForLabels: {
+                    fontSize: 10,
+                  },
+                  backgroundColor: theme.background.color,
+                  backgroundGradientFrom: theme.background.color,
+                  backgroundGradientTo: theme.background.color,
+                  fillShadowGradient: "#42598f",
+                  fillShadowGradientOpacity: 1,
+                  decimalPlaces: 2,
+                  color: () => "#6592e2",
+                  labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                }}
+                withOuterLines={false}
+                withDots={false}
+                withHorizontalLines={false}
+                withVerticalLines={false}
+                bezier
+              />
+            </S.ChartContainer>
       }
     </S.Container>
   )

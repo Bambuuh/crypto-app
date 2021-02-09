@@ -6,6 +6,18 @@ export const Container = styled.View`
   justify-content: space-between;
 `
 
+export const NoDataContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`
+
+export const NoDataText = styled.Text`
+  font-size: 28px;
+  font-weight: bold;
+  color: ${theme.background.onColor};
+`
+
 export const TopContainer = styled.View`
   padding-top: ${theme.baseline * 2}px;
 `
