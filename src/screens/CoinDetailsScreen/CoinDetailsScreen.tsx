@@ -14,6 +14,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import SideSwiper, { SideSwiperItem } from '../../components/SideSwiper'
 import { CoinsContext } from '../../context'
 import Button from '../../components/Button'
+import ExchangeIcon from '../../components/ExchangeIcon/ExchangeIcon'
 
 type Props = {
   route: RouteProp<MainStackParamsList, ScreenRoute.DETAILS>
@@ -84,7 +85,8 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
         <S.TopInnerContainer>
           <S.CoinsContainer>
             <S.CoinName>{coin.name}</S.CoinName>
-            <Button onPress={onPressExchangeCurrency} style={{ marginLeft: theme.baseline * 2 }} title={coinsContext.exchangeCurrency.name} />
+            <ExchangeIcon style={{ marginHorizontal: theme.baseline }} />
+            <Button onPress={onPressExchangeCurrency} title={coinsContext.exchangeCurrency.name} />
           </S.CoinsContainer>
           {coin.price_usd && <S.CoinPrice>${coin.price_usd.toFixed(2)}</S.CoinPrice>}
         </S.TopInnerContainer>
