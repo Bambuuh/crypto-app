@@ -14,8 +14,13 @@ const ExchangeCurrencyScreen: React.FC<{}> = () => {
     navigation.goBack()
   }
 
+  const shouldHighLight = (coin: Coin) => {
+    return coin.asset_id === coinsContext.exchangeCurrency.asset_id
+  }
+
   return (
     <CoinsFilterList
+      shouldHighLight={shouldHighLight}
       coins={coinsContext.allCoins}
       loading={coinsContext.loading}
       onPressCoin={onPressCoin}

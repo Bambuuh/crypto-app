@@ -56,13 +56,15 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
     return [{ data: history.data!.getCoinHistory.map(h => h.volume_traded) }]
   }
 
-  const formatYLabel = (label: string) => {
+  const formatYLabel = (label: string, decimals: number) => {
     if (+label > 10000) {
-      return `${(+label / 1000).toFixed(2)}k`
+      return `${(+label / 1000).toFixed(decimals)}k`
     }
     return label
   }
 
+  const formatLineLabels = (label: string) => formatYLabel(label, 2)
+  const formatBarLabels = (label: string) => formatYLabel(label, 0)
 
   const onPressItem = (value: string) => {
     setPeriod(value)
@@ -94,7 +96,6 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
     decimalPlaces: 2,
     color: () => "#6592e2",
     labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    formatYLabel: formatYLabel
   }
 
   const chartWidth = width - (padding * 2) * 2
@@ -128,7 +129,7 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
                     height={height * 0.25}
                     width={chartWidth}
                     yAxisInterval={1}
-                    formatYLabel={formatYLabel}
+                    formatYLabel={formatLineLabels}
                     chartConfig={chartConfig}
                     withVerticalLabels={false}
                     bezier
@@ -141,8 +142,8 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
                     yAxisLabel=""
                     data={{ labels: [], datasets: getVolumeDataSet() }}
                     width={chartWidth}
-                    height={220}
-                    chartConfig={chartConfig}
+                    height={height * 0.25}
+                    chartConfig={{ ...chartConfig, barPercentage: 0.5, formatYLabel: formatBarLabels }}
                     withInnerLines={false}
                     verticalLabelRotation={30}
                   />

@@ -1,12 +1,13 @@
 import styled from 'styled-components/native'
 import theme from '../../theme'
 
-export const Container = styled.View`
+export const Container = styled.View<{ highlight?: boolean }>`
   flex-direction: row;
   background-color: ${theme.primary.color};
   padding: ${theme.baseline}px;
   border-radius: ${theme.borderRadious.wide}px;
   align-items: center;
+  ${({ highlight }) => highlight && `background-color: ${theme.accent.color};`}
 `
 
 const iconSize = theme.baseline * 4

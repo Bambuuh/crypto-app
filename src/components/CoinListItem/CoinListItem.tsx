@@ -6,18 +6,19 @@ import * as S from './styled'
 
 type OwnProps = {
   coin: Coin
+  highlight?: boolean
   onPressCoin: (coin: Coin) => void
 }
 
 type Props = OwnProps & ViewProps
 
-const CoinListItem: React.FC<Props> = ({ onPressCoin, coin, ...props }) => {
+const CoinListItem: React.FC<Props> = ({ highlight, onPressCoin, coin, ...props }) => {
   const onPress = () => {
     onPressCoin(coin)
   }
   return (
     <TouchableOpacity onPress={onPress} {...props}>
-      <S.Container >
+      <S.Container highlight={highlight} >
         <S.IconImage source={{
           uri: coin.iconUrl,
         }} />

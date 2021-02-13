@@ -10,13 +10,14 @@ import FullScreenSpinner from '../FullScreenSpinner'
 
 type OwnProps = {
   onPressCoin: (coin: Coin) => void
+  shouldHighLight?: (coin: Coin) => boolean
   coins: Coin[]
   loading: boolean
 }
 
 type Props = OwnProps
 
-const Home: React.FC<Props> = ({ coins, onPressCoin, loading }) => {
+const Home: React.FC<Props> = ({ coins, onPressCoin, shouldHighLight, loading }) => {
 
   const debounce = useRef<any>(undefined)
   const [search, setSearch] = useState('')
@@ -52,7 +53,10 @@ const Home: React.FC<Props> = ({ coins, onPressCoin, loading }) => {
     return (<FullScreenSpinner />)
   }
 
-  const renderItem = ({ item }: { item: Coin }) => <CoinListItem onPressCoin={onPressCoin} style={{ marginBottom: 8 }} coin={item} />
+  const renderItem = ({ item }: { item: Coin }) => {
+    const highlight = shouldHighLight && shouldHighLight(item)
+    return <CoinListItem highlight={highlight} onPressCoin={onPressCoin} style={{ marginBottom: 8 }} coin={item} />
+  }
   const keyExtractor = (item: Coin) => item.asset_id
 
   return (
