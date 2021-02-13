@@ -18,6 +18,7 @@ export type History = {
   time_period_start: Date
   time_period_end: Date
   price_close: number
+  volume_traded: number
 }
 
 export type HistoryQueryResponse = { getCoinHistory: History[] }

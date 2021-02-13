@@ -36,6 +36,7 @@ export const HISTORY_QUERY = (
       time_period_start
       time_period_end
       price_close
+      volume_traded
     }
   }
 `

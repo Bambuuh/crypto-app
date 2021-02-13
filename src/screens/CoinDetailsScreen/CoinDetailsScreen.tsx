@@ -1,20 +1,20 @@
 import { useQuery } from '@apollo/client'
 import { RouteProp, useNavigation } from '@react-navigation/native'
 import React, { useContext, useState } from 'react'
-import { Dimensions } from 'react-native'
+import { Dimensions, Text, View } from 'react-native'
 import { HISTORY_QUERY } from '../../graphql'
 import { HistoryQueryResponse } from '../../graphql/types'
 import { MainStackParamsList } from '../../navigation/main'
 import { ScreenRoute } from '../../navigation/navConstants'
-import { LineChart } from "react-native-chart-kit";
+import { BarChart, LineChart } from "react-native-chart-kit";
 import theme from '../../theme'
 import FullScreenSpinner from '../../components/FullScreenSpinner'
 import * as S from './styled'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import SideSwiper, { SideSwiperItem } from '../../components/SideSwiper'
 import { CoinsContext } from '../../context'
 import Button from '../../components/Button'
 import ExchangeIcon from '../../components/ExchangeIcon/ExchangeIcon'
+import { ScrollView } from 'react-native-gesture-handler'
 
 type Props = {
   route: RouteProp<MainStackParamsList, ScreenRoute.DETAILS>
@@ -48,8 +48,12 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
     return null
   }
 
-  const getDataSet = () => {
+  const getPriceDataSet = () => {
     return [{ data: history.data!.getCoinHistory.map(h => h.price_close), }]
+  }
+
+  const getVolumeDataSet = () => {
+    return [{ data: history.data!.getCoinHistory.map(h => h.volume_traded) }]
   }
 
   const formatYLabel = (label: string) => {
@@ -78,52 +82,75 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
   const padding = theme.baseline * 2
 
+  const chartConfig = {
+    style: { padding: theme.baseline },
+    propsForLabels: {
+      fontSize: 12,
+    },
+    backgroundGradientFrom: theme.primary.color,
+    backgroundGradientTo: theme.primary.color,
+    fillShadowGradient: "#42598f",
+    fillShadowGradientOpacity: 1,
+    decimalPlaces: 2,
+    color: () => "#6592e2",
+    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+    formatYLabel: formatYLabel
+  }
+
+  const chartWidth = width - (padding * 2) * 2
+
   return (
-    <S.Container>
-      <S.TopContainer >
-        <S.TopInnerContainer>
-          <S.CoinsContainer>
-            <S.CoinName>{coin.name}</S.CoinName>
-            <ExchangeIcon style={{ marginHorizontal: theme.baseline }} />
-            <Button onPress={onPressExchangeCurrency} title={coinsContext.exchangeCurrency.name} />
-          </S.CoinsContainer>
-          {coin.price_usd && <S.CoinPrice>${coin.price_usd.toFixed(2)}</S.CoinPrice>}
-        </S.TopInnerContainer>
-        <SideSwiper selectedValue={period} onPressItem={onPressItem} items={swiperItems} />
-      </S.TopContainer>
-      {
-        history.loading ? <FullScreenSpinner /> :
-          hasNoDAta ?
-            renderNoData() :
-            <S.ChartContainer style={{ padding, width: width - padding * 2, marginHorizontal: padding }}>
-              <LineChart
-                data={{
-                  labels: [],
-                  datasets: getDataSet(),
-                }}
-                height={height * 0.25}
-                width={width - (padding * 2) * 2}
-                yAxisInterval={1}
-                formatYLabel={formatYLabel}
-                chartConfig={{
-                  style: { padding: theme.baseline },
-                  propsForLabels: {
-                    fontSize: 12,
-                  },
-                  backgroundGradientFrom: theme.primary.color,
-                  backgroundGradientTo: theme.primary.color,
-                  fillShadowGradient: "#42598f",
-                  fillShadowGradientOpacity: 1,
-                  decimalPlaces: 2,
-                  color: () => "#6592e2",
-                  labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                }}
-                withVerticalLabels={false}
-                bezier
-              />
-            </S.ChartContainer>
-      }
-    </S.Container>
+    <ScrollView bounces={false}>
+      <S.Container>
+        <S.TopContainer >
+          <S.TopInnerContainer>
+            <S.CoinsContainer>
+              <S.CoinName>{coin.name}</S.CoinName>
+              <ExchangeIcon style={{ marginHorizontal: theme.baseline }} />
+              <Button onPress={onPressExchangeCurrency} title={coinsContext.exchangeCurrency.name} />
+            </S.CoinsContainer>
+            {coin.price_usd && <S.CoinPrice>${coin.price_usd.toFixed(2)}</S.CoinPrice>}
+          </S.TopInnerContainer>
+          <SideSwiper selectedValue={period} onPressItem={onPressItem} items={swiperItems} />
+        </S.TopContainer>
+        {
+          history.loading ? <FullScreenSpinner /> :
+            hasNoDAta ?
+              renderNoData() :
+              <>
+                <S.ChartTitle>{coin.asset_id} per {coinsContext.exchangeCurrency.asset_id}</S.ChartTitle>
+                <S.ChartContainer style={{ padding, width: width - padding * 2, marginHorizontal: padding }}>
+                  <LineChart
+                    data={{
+                      labels: [],
+                      datasets: getPriceDataSet(),
+                    }}
+                    height={height * 0.25}
+                    width={chartWidth}
+                    yAxisInterval={1}
+                    formatYLabel={formatYLabel}
+                    chartConfig={chartConfig}
+                    withVerticalLabels={false}
+                    bezier
+                  />
+                </S.ChartContainer>
+                <S.ChartTitle style={{ marginTop: theme.baseline * 4 }}>Volume traded</S.ChartTitle>
+                <S.ChartContainer style={{ padding, width: width - padding * 2, marginHorizontal: padding }}>
+                  <BarChart
+                    yAxisSuffix=""
+                    yAxisLabel=""
+                    data={{ labels: [], datasets: getVolumeDataSet() }}
+                    width={chartWidth}
+                    height={220}
+                    chartConfig={chartConfig}
+                    withInnerLines={false}
+                    verticalLabelRotation={30}
+                  />
+                </S.ChartContainer>
+              </>
+        }
+      </S.Container>
+    </ScrollView>
   )
 }
 

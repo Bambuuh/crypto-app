@@ -45,8 +45,15 @@ export const CoinPrice = styled.Text`
   font-size: 18px;
 `
 
+export const ChartTitle = styled.Text`
+  margin-left: ${theme.baseline * 2}px;
+  margin-bottom: ${theme.baseline * 2}px;
+  color: ${theme.background.onColor};
+  font-size: 18px;
+`
+
 export const ChartContainer = styled.View`
   border-radius: ${theme.borderRadious.wide * 2}px;
   background-color: ${theme.primary.color};
-  margin-bottom: -150px;
+  /* margin-bottom: -150px; */
 `
