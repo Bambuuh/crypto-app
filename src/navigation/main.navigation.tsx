@@ -29,10 +29,6 @@ const MainNavigation = () => {
         headerTintColor: theme.background.onColor,
         title: ''
       })} />
-      <MainStack.Screen name={ScreenRoute.SET_EXCHANGE_CURRENCY} component={CompareCurrencyScreen} options={{
-        title: "Exchange currency",
-
-      }} />
     </MainStack.Navigator>
   )
 }

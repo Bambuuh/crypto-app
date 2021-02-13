@@ -11,8 +11,8 @@ const ModalStack = createStackNavigator<ModalStackParamsList>()
 
 const ModalStackNavigation = () => {
   return (
-    <ModalStack.Navigator>
-      <ModalStack.Screen name={ScreenRoute.SET_EXCHANGE_CURRENCY} component={ExchangeCurrencyScreen} />
+    <ModalStack.Navigator >
+      <ModalStack.Screen options={{ title: 'Exchange currency' }} name={ScreenRoute.SET_EXCHANGE_CURRENCY} component={ExchangeCurrencyScreen} />
     </ModalStack.Navigator>
   )
 }

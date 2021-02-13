@@ -28,7 +28,7 @@ const RootNavigation = () => {
         dark: true
       }}
     >
-      <RootStack.Navigator>
+      <RootStack.Navigator mode="modal" headerMode="none">
         <RootStack.Screen name={StackRoute.MAIN} component={MainNavigation} options={{ headerShown: false }} />
         <RootStack.Screen name={StackRoute.MODAL} component={ModalStackNavigation} />
       </RootStack.Navigator>

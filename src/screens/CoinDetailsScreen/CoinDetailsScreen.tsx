@@ -1,11 +1,11 @@
 import { useQuery } from '@apollo/client'
 import { RouteProp, useNavigation } from '@react-navigation/native'
 import React, { useContext, useState } from 'react'
-import { Dimensions, Text, View } from 'react-native'
+import { Dimensions } from 'react-native'
 import { HISTORY_QUERY } from '../../graphql'
 import { HistoryQueryResponse } from '../../graphql/types'
 import { MainStackParamsList } from '../../navigation/main.navigation'
-import { ScreenRoute } from '../../navigation/navConstants'
+import { ScreenRoute, StackRoute } from '../../navigation/navConstants'
 import { BarChart, LineChart } from "react-native-chart-kit";
 import theme from '../../theme'
 import FullScreenSpinner from '../../components/FullScreenSpinner'
@@ -77,7 +77,7 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
   }
 
   const onPressExchangeCurrency = () => {
-    navigation.navigate(ScreenRoute.SET_EXCHANGE_CURRENCY)
+    navigation.navigate(StackRoute.MODAL, { screen: ScreenRoute.SET_EXCHANGE_CURRENCY })
   }
 
   const padding = theme.baseline * 2
