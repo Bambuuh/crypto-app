@@ -1,9 +1,9 @@
-import { ApolloProvider } from '@apollo/client';
 import React from 'react';
-import { View } from 'react-native';
+import { ApolloProvider } from '@apollo/client';
+import { StatusBar, View } from 'react-native';
 import { CoinsContextRoot } from './context';
 import { apolloClient } from './graphql/config';
-import MainNavigation from './navigation'
+import RootNavigation from './navigation';
 import theme from './theme';
 
 declare const global: { HermesInternal: null | {} };
@@ -11,6 +11,7 @@ declare const global: { HermesInternal: null | {} };
 const App = () => {
   return (
     <ApolloProvider client={apolloClient}>
+      <StatusBar barStyle="light-content" />
       <CoinsContextRoot>
         <View
           style={{
@@ -19,7 +20,7 @@ const App = () => {
             backgroundColor: theme.primary.color,
           }}
         >
-          <MainNavigation />
+          <RootNavigation />
         </View>
       </CoinsContextRoot>
     </ApolloProvider>

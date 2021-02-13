@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Coin } from '../../graphql/types'
 import { CoinsContext } from '../../context'
 import CoinsFilterList from '../../components/CoinsFilterList'
-import { MainStackParamsList } from '../../navigation/main'
+import { MainStackParamsList } from '../../navigation/main.navigation'
 import { ScreenRoute } from '../../navigation/navConstants'
 import { useNavigation } from '@react-navigation/native'
 

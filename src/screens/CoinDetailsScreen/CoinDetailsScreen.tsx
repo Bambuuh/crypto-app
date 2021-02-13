@@ -4,7 +4,7 @@ import React, { useContext, useState } from 'react'
 import { Dimensions, Text, View } from 'react-native'
 import { HISTORY_QUERY } from '../../graphql'
 import { HistoryQueryResponse } from '../../graphql/types'
-import { MainStackParamsList } from '../../navigation/main'
+import { MainStackParamsList } from '../../navigation/main.navigation'
 import { ScreenRoute } from '../../navigation/navConstants'
 import { BarChart, LineChart } from "react-native-chart-kit";
 import theme from '../../theme'
