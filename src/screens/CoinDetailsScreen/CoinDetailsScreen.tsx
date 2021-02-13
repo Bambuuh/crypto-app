@@ -81,7 +81,6 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
   return (
     <S.Container>
       <S.TopContainer >
-        <SafeAreaView />
         <S.TopInnerContainer>
           <S.CoinsContainer>
             <S.CoinName>{coin.name}</S.CoinName>
@@ -104,7 +103,6 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
                 }}
                 height={height * 0.25}
                 width={width - (padding * 2) * 2}
-                yAxisLabel="$"
                 yAxisInterval={1}
                 formatYLabel={formatYLabel}
                 chartConfig={{

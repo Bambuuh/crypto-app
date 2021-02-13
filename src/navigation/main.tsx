@@ -24,11 +24,14 @@ const MainNavigation = () => {
   return (
     <MainStack.Navigator screenOptions={{ headerStyle: { elevation: 0, shadowOpacity: 0 } }}>
       <MainStack.Screen name={ScreenRoute.HOME} component={HomeScreen} options={{
-        title: "Home"
+        title: "Coins"
       }} />
       <MainStack.Screen name={ScreenRoute.DETAILS} component={CoinDetailsScreen} options={({ route }) => ({
-        header: () => null,
-        title: route.params.coin.name
+        headerStyle: {
+          backgroundColor: 'transparent'
+        },
+        headerTintColor: theme.background.onColor,
+        title: ''
       })} />
       <MainStack.Screen name={ScreenRoute.SET_EXCHANGE_CURRENCY} component={CompareCurrencyScreen} options={{
         title: "Exchange currency",
