@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
-import { RouteProp } from '@react-navigation/native'
-import React, { useState } from 'react'
+import { RouteProp, useNavigation } from '@react-navigation/native'
+import React, { useContext, useState } from 'react'
 import { Dimensions } from 'react-native'
 import { HISTORY_QUERY } from '../../graphql'
 import { HistoryQueryResponse } from '../../graphql/types'
@@ -12,6 +12,8 @@ import FullScreenSpinner from '../../components/FullScreenSpinner'
 import * as S from './styled'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import SideSwiper, { SideSwiperItem } from '../../components/SideSwiper'
+import { CoinsContext } from '../../context'
+import Button from '../../components/Button'
 
 type Props = {
   route: RouteProp<MainStackParamsList, ScreenRoute.DETAILS>
@@ -34,17 +36,19 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
   const [period, setPeriod] = useState('week')
 
-  const { loading, data, error } = useQuery<HistoryQueryResponse>(HISTORY_QUERY(coin.asset_id, period))
+  const coinsContext = useContext(CoinsContext)
+  const history = useQuery<HistoryQueryResponse>(HISTORY_QUERY(coin.asset_id, coinsContext.exchangeCurrency.asset_id, period))
+  const navigation = useNavigation()
 
-  const hasNoDAta = !loading && data?.getCoinHistory.length === 0
+  const hasNoDAta = !history.loading && history.data?.getCoinHistory.length === 0
 
-  if (error) {
-    console.log(error)
+  if (history.error) {
+    console.log(history.error)
     return null
   }
 
   const getDataSet = () => {
-    return [{ data: data!.getCoinHistory.map(h => h.price_close), }]
+    return [{ data: history.data!.getCoinHistory.map(h => h.price_close), }]
   }
 
   const formatYLabel = (label: string) => {
@@ -67,6 +71,10 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
     )
   }
 
+  const onPressExchangeCurrency = () => {
+    navigation.navigate(ScreenRoute.SET_EXCHANGE_CURRENCY)
+  }
+
   const padding = theme.baseline * 2
 
   return (
@@ -74,13 +82,16 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
       <S.TopContainer >
         <SafeAreaView />
         <S.TopInnerContainer>
-          <S.CoinName>{coin.name}</S.CoinName>
+          <S.CoinsContainer>
+            <S.CoinName>{coin.name}</S.CoinName>
+            <Button onPress={onPressExchangeCurrency} style={{ marginLeft: theme.baseline * 2 }} title={coinsContext.exchangeCurrency.name} />
+          </S.CoinsContainer>
           {coin.price_usd && <S.CoinPrice>${coin.price_usd.toFixed(2)}</S.CoinPrice>}
         </S.TopInnerContainer>
         <SideSwiper selectedValue={period} onPressItem={onPressItem} items={swiperItems} />
       </S.TopContainer>
       {
-        loading ? <FullScreenSpinner /> :
+        history.loading ? <FullScreenSpinner /> :
           hasNoDAta ?
             renderNoData() :
             <S.ChartContainer style={{ padding, width: width - padding * 2, marginHorizontal: padding }}>

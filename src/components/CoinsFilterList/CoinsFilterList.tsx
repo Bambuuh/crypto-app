@@ -1,32 +1,38 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
-import ScreenContainer from '../../components/_general/ScreenContainer'
+import React, { useEffect, useRef, useState } from 'react'
+import ScreenContainer from '../_general/ScreenContainer'
 import { Coin } from '../../graphql/types'
-import CoinListItem from '../../components/CoinListItem'
-import { CoinsContext } from '../../context'
+import CoinListItem from '../CoinListItem'
 import { FlatList } from 'react-native-gesture-handler'
 import * as S from './styled'
-import Input from '../../components/Input'
+import Input from '../Input'
 import theme from '../../theme'
-import FullScreenSpinner from '../../components/FullScreenSpinner'
+import FullScreenSpinner from '../FullScreenSpinner'
 
-const Home: React.FC<{}> = () => {
+type OwnProps = {
+  onPressCoin: (coin: Coin) => void
+  coins: Coin[]
+  loading: boolean
+}
+
+type Props = OwnProps
+
+const Home: React.FC<Props> = ({ coins, onPressCoin, loading }) => {
 
   const debounce = useRef<any>(undefined)
   const [search, setSearch] = useState('')
-  const coinsContext = useContext(CoinsContext)
-  const [filtered, setFiltered] = useState(coinsContext.data)
+  const [filtered, setFiltered] = useState(coins)
 
   useEffect(() => {
     filterCoins()
-  }, [coinsContext.data])
+  }, [coins])
 
   const filterCoins = () => {
     const query = search.toLowerCase().trim()
     if (query.trim().length === 0) {
-      setFiltered(coinsContext.data)
+      setFiltered(coins)
       return
     }
-    const filteredCoins = coinsContext.data.filter(coin => {
+    const filteredCoins = coins.filter(coin => {
       const matchName = coin.name.toLowerCase().includes(query)
       const matchCode = coin.asset_id.toLowerCase().includes(query)
       return matchName || matchCode
@@ -42,15 +48,11 @@ const Home: React.FC<{}> = () => {
     }, 200)
   }
 
-  if (coinsContext.loading) {
+  if (loading) {
     return (<FullScreenSpinner />)
   }
 
-  if (coinsContext.error) {
-    console.log(coinsContext.error)
-  }
-
-  const renderItem = ({ item }: { item: Coin }) => <CoinListItem style={{ marginBottom: 8 }} coin={item} />
+  const renderItem = ({ item }: { item: Coin }) => <CoinListItem onPressCoin={onPressCoin} style={{ marginBottom: 8 }} coin={item} />
   const keyExtractor = (item: Coin) => item.asset_id
 
   return (

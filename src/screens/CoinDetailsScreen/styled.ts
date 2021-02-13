@@ -28,20 +28,25 @@ export const TopInnerContainer = styled.View`
   padding: 0 ${theme.baseline * 4}px;
 `
 
+export const CoinsContainer = styled.View`
+  align-items: center;
+  flex-direction: row;
+`
+
 export const CoinName = styled.Text`
   color: ${theme.background.onColor};
-  font-size: 28px;
+  font-size: 22px;
   font-weight: bold;
 `
 
 export const CoinPrice = styled.Text`
   margin-left: ${theme.baseline * 4}px;
   color: ${theme.background.onColor};
-  font-size: 20px;
+  font-size: 18px;
 `
 
 export const ChartContainer = styled.View`
-  border-radius: ${theme.borderRadious.wide * 2};
+  border-radius: ${theme.borderRadious.wide * 2}px;
   background-color: ${theme.primary.color};
   margin-bottom: -150px;
 `

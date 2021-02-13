@@ -26,9 +26,13 @@ export const COINS_QUERY = gql`
   }
 `
 
-export const HISTORY_QUERY = (coinId: string, period: string) => gql`
+export const HISTORY_QUERY = (
+  coinId: string,
+  compareAssetId: string,
+  period: string
+) => gql`
   {
-    getCoinHistory(assetId: "${coinId}", period: "${period}") {
+    getCoinHistory(assetId: "${coinId}", compareAssetId: "${compareAssetId}" period: "${period}") {
       time_period_start
       time_period_end
       price_close
