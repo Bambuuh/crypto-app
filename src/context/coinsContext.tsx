@@ -33,7 +33,6 @@ export const CoinsContextRoot: React.FC = ({ children }) => {
   useEffect(() => {
     if (!exchangeCurrency && data && data.getCoins.length > 0) {
       const initialCompareCurrency = data.getCoins.find(c => c.asset_id === 'USD')
-      console.log(initialCompareCurrency)
       setExchangeCurrency(initialCompareCurrency)
     }
 

@@ -43,11 +43,6 @@ const CoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
   const hasNoDAta = !history.loading && history.data?.getCoinHistory.length === 0
 
-  if (history.error) {
-    console.log(history.error)
-    return null
-  }
-
   const getPriceDataSet = () => {
     return [{ data: history.data!.getCoinHistory.map(h => h.price_close), }]
   }

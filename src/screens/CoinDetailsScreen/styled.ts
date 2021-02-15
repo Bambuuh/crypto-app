@@ -55,5 +55,4 @@ export const ChartTitle = styled.Text`
 export const ChartContainer = styled.View`
   border-radius: ${theme.borderRadious.wide * 2}px;
   background-color: ${theme.primary.color};
-  /* margin-bottom: -150px; */
 `

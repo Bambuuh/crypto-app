@@ -12,11 +12,11 @@ type Props = OwnProps & ViewProps
 
 const Button: React.FC<Props> = ({ title, onPress, ...viewProps }) => {
   return (
-    <S.SwiperButton {...viewProps}>
+    <S.Container {...viewProps}>
       <TouchableOpacity onPress={onPress}>
-        <S.SwiperButtonText>{title}</S.SwiperButtonText>
+        <S.Title>{title}</S.Title>
       </TouchableOpacity>
-    </S.SwiperButton>
+    </S.Container>
   )
 }
 
