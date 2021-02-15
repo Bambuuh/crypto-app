@@ -2,8 +2,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { Coin } from '../graphql/types'
 import CoinDetailsScreen from '../screens/CoinDetailsScreen'
-import CompareCurrencyScreen from '../screens/ExchangeCurrencyScreen'
-import HomeScreen from '../screens/HomeScreen'
+import CoinListScreen from '../screens/CoinListScreen'
 import theme from '../theme'
 import { ScreenRoute } from './navConstants'
 
@@ -19,7 +18,7 @@ const MainStack = createStackNavigator<MainStackParamsList>()
 const MainNavigation = () => {
   return (
     <MainStack.Navigator screenOptions={{ headerStyle: { elevation: 0, shadowOpacity: 0 } }}>
-      <MainStack.Screen name={ScreenRoute.HOME} component={HomeScreen} options={{
+      <MainStack.Screen name={ScreenRoute.HOME} component={CoinListScreen} options={{
         title: "Coins"
       }} />
       <MainStack.Screen name={ScreenRoute.DETAILS} component={CoinDetailsScreen} options={({ route }) => ({
